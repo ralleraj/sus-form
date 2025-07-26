@@ -15,7 +15,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: #f5f5f5;
+            background: #f8f9fa;
             padding: 20px;
         }
         
@@ -23,85 +23,136 @@
             max-width: 800px;
             margin: 0 auto;
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
         }
         
         h1 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             color: #2c3e50;
+            font-weight: 600;
+            font-size: 32px;
         }
         
         .language-selector {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
         .language-btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             margin: 5px;
-            border: 2px solid #3498db;
+            border: 2px solid #e0e0e0;
             background: white;
-            color: #3498db;
-            border-radius: 6px;
+            color: #555;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
         
         .language-btn.active {
-            background: #3498db;
+            background: #2c3e50;
             color: white;
+            border-color: #2c3e50;
         }
         
-        .language-btn:hover {
-            background: #2980b9;
-            color: white;
-            border-color: #2980b9;
+        .language-btn:hover:not(.active) {
+            border-color: #2c3e50;
+            background: #f8f9fa;
         }
         
-        .question-section {
+        /* Scale Legend */
+        .scale-legend {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
             display: none;
         }
         
-        .question-section.active {
+        .scale-legend.active {
             display: block;
         }
         
-        .scale-header {
+        .scale-legend-title {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .scale-visual {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
-            padding: 0 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .scale-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .scale-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
-            color: #7f8c8d;
+            color: white;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        
+        .scale-1 { background: #e74c3c; }
+        .scale-2 { background: #e67e22; }
+        .scale-3 { background: #f1c40f; }
+        .scale-4 { background: #2ecc71; }
+        .scale-5 { background: #27ae60; }
+        
+        .scale-label {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.2;
         }
         
         .question {
-            background: #f8f9fa;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
+            background: white;
+            padding: 24px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            transition: border-color 0.2s ease;
+        }
+        
+        .question:hover {
+            border-color: #d0d0d0;
         }
         
         .question-text {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-weight: 500;
+            font-size: 16px;
+            line-height: 1.5;
         }
         
         .radio-group {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
         }
         
         .radio-wrapper {
             text-align: center;
             flex: 1;
-            position: relative;
         }
         
         .radio-wrapper input[type="radio"] {
@@ -109,71 +160,65 @@
         }
         
         .radio-wrapper label {
-            display: inline-block;
+            display: block;
             width: 50px;
             height: 50px;
             line-height: 50px;
             text-align: center;
             border-radius: 50%;
-            background: white;
-            border: 2px solid #ddd;
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            position: relative;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 18px;
+            color: #666;
+            margin: 0 auto;
         }
         
-        /* Add scale hints on first and last options */
-        .radio-wrapper:first-child label::after {
-            content: attr(data-hint);
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 10px;
-            color: #999;
-            white-space: nowrap;
-            font-weight: normal;
-        }
-        
-        .radio-wrapper:last-child label::after {
-            content: attr(data-hint);
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 10px;
-            color: #999;
-            white-space: nowrap;
-            font-weight: normal;
-        }
+        /* Color coding for radio buttons */
+        .radio-wrapper:nth-child(1) label { border-color: #e74c3c; color: #e74c3c; }
+        .radio-wrapper:nth-child(2) label { border-color: #e67e22; color: #e67e22; }
+        .radio-wrapper:nth-child(3) label { border-color: #f1c40f; color: #f1c40f; }
+        .radio-wrapper:nth-child(4) label { border-color: #2ecc71; color: #2ecc71; }
+        .radio-wrapper:nth-child(5) label { border-color: #27ae60; color: #27ae60; }
         
         .radio-wrapper input[type="radio"]:checked + label {
-            background: #3498db;
             color: white;
-            border-color: #3498db;
             transform: scale(1.1);
         }
         
+        .radio-wrapper:nth-child(1) input[type="radio"]:checked + label { background: #e74c3c; border-color: #e74c3c; }
+        .radio-wrapper:nth-child(2) input[type="radio"]:checked + label { background: #e67e22; border-color: #e67e22; }
+        .radio-wrapper:nth-child(3) input[type="radio"]:checked + label { background: #f1c40f; border-color: #f1c40f; }
+        .radio-wrapper:nth-child(4) input[type="radio"]:checked + label { background: #2ecc71; border-color: #2ecc71; }
+        .radio-wrapper:nth-child(5) input[type="radio"]:checked + label { background: #27ae60; border-color: #27ae60; }
+        
         .radio-wrapper label:hover {
-            border-color: #3498db;
             transform: scale(1.05);
+            background: #fafafa;
         }
         
         /* User info styles */
         #user-info input[type="text"],
         #user-info input[type="email"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
             font-size: 16px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            transition: border-color 0.2s ease;
+        }
+        
+        #user-info input:focus {
+            outline: none;
+            border-color: #2c3e50;
         }
         
         .name-fields {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         
@@ -185,24 +230,24 @@
         .submit-btn {
             display: block;
             width: 100%;
-            padding: 15px;
-            background: #27ae60;
+            padding: 16px;
+            background: #2c3e50;
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 30px;
-            transition: background 0.3s ease;
+            margin-top: 40px;
+            transition: background 0.2s ease;
         }
         
-        .submit-btn:hover {
-            background: #219a52;
+        .submit-btn:hover:not(:disabled) {
+            background: #1a252f;
         }
         
         .submit-btn:disabled {
-            background: #95a5a6;
+            background: #bdc3c7;
             cursor: not-allowed;
         }
         
@@ -210,34 +255,99 @@
             display: none;
             background: #d4edda;
             color: #155724;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             text-align: center;
             margin-top: 20px;
+            font-weight: 500;
         }
         
         .error-message {
             display: none;
             background: #f8d7da;
             color: #721c24;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             text-align: center;
             margin-top: 20px;
+            font-weight: 500;
+        }
+        
+        /* Tablet responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
         }
         
         /* Mobile responsive */
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
+                border-radius: 12px;
+            }
+            
+            h1 {
+                font-size: 24px;
+                margin-bottom: 30px;
             }
             
             .language-btn {
-                padding: 8px 16px;
+                padding: 10px 20px;
                 font-size: 14px;
-                margin: 3px;
             }
             
+            .scale-item {
+                padding: 5px;
+            }
+            
+            .scale-number {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+            
+            .scale-label {
+                font-size: 11px;
+            }
+            
+            .radio-wrapper label {
+                width: 44px;
+                height: 44px;
+                line-height: 44px;
+                font-size: 16px;
+            }
+            
+            .radio-group {
+                gap: 5px;
+            }
+            
+            .name-fields input {
+                min-width: 100%;
+            }
+            
+            .question {
+                padding: 20px;
+                margin-bottom: 16px;
+            }
+            
+            .question-text {
+                font-size: 15px;
+                margin-bottom: 16px;
+            }
+            
+            .submit-btn {
+                font-size: 16px;
+                padding: 14px;
+            }
+        }
+        
+        /* Very small phones */
+        @media (max-width: 380px) {
             .radio-wrapper label {
                 width: 40px;
                 height: 40px;
@@ -245,26 +355,14 @@
                 font-size: 14px;
             }
             
-            .radio-wrapper:first-child label::after,
-            .radio-wrapper:last-child label::after {
-                font-size: 9px;
-                bottom: -18px;
-            }
-            
-            .name-fields input {
-                min-width: 100%;
-            }
-            
-            .scale-header {
+            .scale-number {
+                width: 30px;
+                height: 30px;
                 font-size: 14px;
             }
             
-            .question {
-                padding: 15px;
-            }
-            
-            .question-text {
-                margin-bottom: 20px;
+            .scale-label {
+                font-size: 10px;
             }
         }
     </style>
@@ -280,6 +378,33 @@
         </div>
         
         <form id="susForm">
+            <!-- Scale Legend -->
+            <div id="scale-legend" class="scale-legend">
+                <div class="scale-legend-title" id="scale-title">Scale Guide</div>
+                <div class="scale-visual">
+                    <div class="scale-item">
+                        <div class="scale-number scale-1">1</div>
+                        <div class="scale-label" id="scale-min">Strongly disagree</div>
+                    </div>
+                    <div class="scale-item">
+                        <div class="scale-number scale-2">2</div>
+                        <div class="scale-label">&nbsp;</div>
+                    </div>
+                    <div class="scale-item">
+                        <div class="scale-number scale-3">3</div>
+                        <div class="scale-label" id="scale-neutral">Neutral</div>
+                    </div>
+                    <div class="scale-item">
+                        <div class="scale-number scale-4">4</div>
+                        <div class="scale-label">&nbsp;</div>
+                    </div>
+                    <div class="scale-item">
+                        <div class="scale-number scale-5">5</div>
+                        <div class="scale-label" id="scale-max">Strongly agree</div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- User Information -->
             <div id="user-info" style="display: none; margin-bottom: 30px;">
                 <div class="question">
@@ -288,7 +413,7 @@
                         <input type="text" id="firstName" name="firstName" placeholder="First name" required>
                         <input type="text" id="lastName" name="lastName" placeholder="Last name" required>
                     </div>
-                    <div class="question-text" id="email-label" style="margin-top: 15px;">Email</div>
+                    <div class="question-text" id="email-label" style="margin-top: 20px;">Email</div>
                     <input type="email" id="email" name="email" placeholder="example@email.com" required>
                 </div>
             </div>
@@ -300,7 +425,7 @@
         </form>
         
         <div class="success-message" id="successMessage">
-            Thank you! / Kiitos! / Tack!
+            Thank you for your response! / Kiitos vastauksestasi! / Tack för ditt svar!
         </div>
         
         <div class="error-message" id="errorMessage">
@@ -318,8 +443,10 @@
                 lastNamePlaceholder: 'Sukunimi',
                 emailPlaceholder: 'esimerkki@email.com',
                 submitButton: 'Lähetä',
-                scaleMin: 'Eri mieltä',
-                scaleMax: 'Samaa mieltä',
+                scaleTitle: 'Asteikko-opas',
+                scaleMin: 'Täysin eri mieltä',
+                scaleNeutral: 'Neutraali',
+                scaleMax: 'Täysin samaa mieltä',
                 questions: [
                     'Luulen, että käyttäisin tätä sovellusta usein',
                     'Mielestäni sovellus oli turhan monimutkainen',
@@ -340,7 +467,9 @@
                 lastNamePlaceholder: 'Efternamn',
                 emailPlaceholder: 'exempel@email.com',
                 submitButton: 'Skicka',
+                scaleTitle: 'Skalguide',
                 scaleMin: 'Instämmer inte alls',
+                scaleNeutral: 'Neutral',
                 scaleMax: 'Instämmer helt',
                 questions: [
                     'Jag tror att jag skulle vilja använda denna applikation ofta',
@@ -362,7 +491,9 @@
                 lastNamePlaceholder: 'Last name',
                 emailPlaceholder: 'example@email.com',
                 submitButton: 'Submit',
+                scaleTitle: 'Scale Guide',
                 scaleMin: 'Strongly disagree',
+                scaleNeutral: 'Neutral',
                 scaleMax: 'Strongly agree',
                 questions: [
                     'I think that I would like to use this system frequently',
@@ -391,6 +522,15 @@
             });
             event.target.classList.add('active');
             
+            // Show scale legend
+            document.getElementById('scale-legend').classList.add('active');
+            
+            // Update scale legend text
+            document.getElementById('scale-title').textContent = trans.scaleTitle;
+            document.getElementById('scale-min').textContent = trans.scaleMin;
+            document.getElementById('scale-neutral').textContent = trans.scaleNeutral;
+            document.getElementById('scale-max').textContent = trans.scaleMax;
+            
             // Show user info section
             document.getElementById('user-info').style.display = 'block';
             
@@ -403,12 +543,7 @@
             
             // Generate questions
             const container = document.getElementById('questions-container');
-            container.innerHTML = `
-                <div class="scale-header">
-                    <span>${trans.scaleMin}</span>
-                    <span>${trans.scaleMax}</span>
-                </div>
-            `;
+            container.innerHTML = '';
             
             trans.questions.forEach((question, index) => {
                 const qNum = index + 1;
@@ -419,8 +554,7 @@
                             ${[1,2,3,4,5].map(value => `
                                 <div class="radio-wrapper">
                                     <input type="radio" id="${lang}-q${qNum}-${value}" name="${lang}-q${qNum}" value="${value}" required>
-                                    <label for="${lang}-q${qNum}-${value}" 
-                                           data-hint="${value === 1 ? trans.scaleMin : value === 5 ? trans.scaleMax : ''}">${value}</label>
+                                    <label for="${lang}-q${qNum}-${value}">${value}</label>
                                 </div>
                             `).join('')}
                         </div>
@@ -478,7 +612,7 @@
             });
             formData.susScore = score * 2.5;
             
-            // Replace this with your Google Apps Script Web App URL
+            // Your Google Apps Script Web App URL
             const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJkbIsCcuNunAPwYrBW5h6v33Sa6PMeBWu-d6ZeDccYnfEUpkSaRxd3LsDuQxv_2kF/exec';
             
             try {
