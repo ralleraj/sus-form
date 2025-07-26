@@ -40,8 +40,8 @@
         }
         
         .language-btn {
-            padding: 10px 30px;
-            margin: 0 10px;
+            padding: 10px 20px;
+            margin: 5px;
             border: 2px solid #3498db;
             background: white;
             color: #3498db;
@@ -101,6 +101,7 @@
         .radio-wrapper {
             text-align: center;
             flex: 1;
+            position: relative;
         }
         
         .radio-wrapper input[type="radio"] {
@@ -119,6 +120,32 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        /* Add scale hints on first and last options */
+        .radio-wrapper:first-child label::after {
+            content: attr(data-hint);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #999;
+            white-space: nowrap;
+            font-weight: normal;
+        }
+        
+        .radio-wrapper:last-child label::after {
+            content: attr(data-hint);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #999;
+            white-space: nowrap;
+            font-weight: normal;
         }
         
         .radio-wrapper input[type="radio"]:checked + label {
@@ -131,6 +158,28 @@
         .radio-wrapper label:hover {
             border-color: #3498db;
             transform: scale(1.05);
+        }
+        
+        /* User info styles */
+        #user-info input[type="text"],
+        #user-info input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .name-fields {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .name-fields input {
+            flex: 1;
+            min-width: 200px;
         }
         
         .submit-btn {
@@ -177,9 +226,16 @@
             margin-top: 20px;
         }
         
+        /* Mobile responsive */
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
+            }
+            
+            .language-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+                margin: 3px;
             }
             
             .radio-wrapper label {
@@ -187,6 +243,28 @@
                 height: 40px;
                 line-height: 40px;
                 font-size: 14px;
+            }
+            
+            .radio-wrapper:first-child label::after,
+            .radio-wrapper:last-child label::after {
+                font-size: 9px;
+                bottom: -18px;
+            }
+            
+            .name-fields input {
+                min-width: 100%;
+            }
+            
+            .scale-header {
+                font-size: 14px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .question-text {
+                margin-bottom: 20px;
             }
         }
     </style>
@@ -198,578 +276,114 @@
         <div class="language-selector">
             <button class="language-btn" onclick="selectLanguage('fi')">Suomi</button>
             <button class="language-btn" onclick="selectLanguage('sv')">Svenska</button>
+            <button class="language-btn" onclick="selectLanguage('en')">English</button>
         </div>
         
         <form id="susForm">
             <!-- User Information -->
             <div id="user-info" style="display: none; margin-bottom: 30px;">
                 <div class="question">
-                    <div class="question-text" id="name-label">Nimi / Namn</div>
-                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                        <input type="text" id="firstName" name="firstName" placeholder="Etunimi / Förnamn" required 
-                               style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
-                        <input type="text" id="lastName" name="lastName" placeholder="Sukunimi / Efternamn" required 
-                               style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+                    <div class="question-text" id="name-label">Name</div>
+                    <div class="name-fields">
+                        <input type="text" id="firstName" name="firstName" placeholder="First name" required>
+                        <input type="text" id="lastName" name="lastName" placeholder="Last name" required>
                     </div>
-                    <div class="question-text" id="email-label">Sähköposti / E-post</div>
-                    <input type="email" id="email" name="email" placeholder="esimerkki@email.com / exempel@email.com" required 
-                           style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+                    <div class="question-text" id="email-label" style="margin-top: 15px;">Email</div>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
                 </div>
             </div>
             
-            <!-- Finnish Questions -->
-            <div id="fi-questions" class="question-section">
-                <div class="scale-header">
-                    <span>Eri mieltä</span>
-                    <span>Samaa mieltä</span>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">1. Luulen, että käyttäisin tätä sovellusta usein</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q1-1" name="fi-q1" value="1" required>
-                            <label for="fi-q1-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q1-2" name="fi-q1" value="2">
-                            <label for="fi-q1-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q1-3" name="fi-q1" value="3">
-                            <label for="fi-q1-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q1-4" name="fi-q1" value="4">
-                            <label for="fi-q1-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q1-5" name="fi-q1" value="5">
-                            <label for="fi-q1-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">2. Mielestäni sovellus oli turhan monimutkainen</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q2-1" name="fi-q2" value="1" required>
-                            <label for="fi-q2-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q2-2" name="fi-q2" value="2">
-                            <label for="fi-q2-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q2-3" name="fi-q2" value="3">
-                            <label for="fi-q2-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q2-4" name="fi-q2" value="4">
-                            <label for="fi-q2-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q2-5" name="fi-q2" value="5">
-                            <label for="fi-q2-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">3. Mielestäni sovelluksen käyttäminen oli helppoa</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q3-1" name="fi-q3" value="1" required>
-                            <label for="fi-q3-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q3-2" name="fi-q3" value="2">
-                            <label for="fi-q3-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q3-3" name="fi-q3" value="3">
-                            <label for="fi-q3-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q3-4" name="fi-q3" value="4">
-                            <label for="fi-q3-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q3-5" name="fi-q3" value="5">
-                            <label for="fi-q3-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">4. Luulen, että tarvitsen teknisen henkilön tukea, jotta osaisin käyttää tätä sovellusta</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q4-1" name="fi-q4" value="1" required>
-                            <label for="fi-q4-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q4-2" name="fi-q4" value="2">
-                            <label for="fi-q4-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q4-3" name="fi-q4" value="3">
-                            <label for="fi-q4-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q4-4" name="fi-q4" value="4">
-                            <label for="fi-q4-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q4-5" name="fi-q4" value="5">
-                            <label for="fi-q4-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">5. Mielestäni sovelluksen eri osat toimivat hyvin yhteen</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q5-1" name="fi-q5" value="1" required>
-                            <label for="fi-q5-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q5-2" name="fi-q5" value="2">
-                            <label for="fi-q5-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q5-3" name="fi-q5" value="3">
-                            <label for="fi-q5-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q5-4" name="fi-q5" value="4">
-                            <label for="fi-q5-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q5-5" name="fi-q5" value="5">
-                            <label for="fi-q5-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">6. Mielestäni sovelluksessa on liian epäjohdonmukainen</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q6-1" name="fi-q6" value="1" required>
-                            <label for="fi-q6-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q6-2" name="fi-q6" value="2">
-                            <label for="fi-q6-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q6-3" name="fi-q6" value="3">
-                            <label for="fi-q6-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q6-4" name="fi-q6" value="4">
-                            <label for="fi-q6-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q6-5" name="fi-q6" value="5">
-                            <label for="fi-q6-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">7. Luulen, että useimmat oppivat sovelluksen käytön erittäin nopeasti</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q7-1" name="fi-q7" value="1" required>
-                            <label for="fi-q7-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q7-2" name="fi-q7" value="2">
-                            <label for="fi-q7-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q7-3" name="fi-q7" value="3">
-                            <label for="fi-q7-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q7-4" name="fi-q7" value="4">
-                            <label for="fi-q7-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q7-5" name="fi-q7" value="5">
-                            <label for="fi-q7-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">8. Mielestäni sovelluksen käyttö oli hyvin hankalaa</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q8-1" name="fi-q8" value="1" required>
-                            <label for="fi-q8-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q8-2" name="fi-q8" value="2">
-                            <label for="fi-q8-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q8-3" name="fi-q8" value="3">
-                            <label for="fi-q8-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q8-4" name="fi-q8" value="4">
-                            <label for="fi-q8-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q8-5" name="fi-q8" value="5">
-                            <label for="fi-q8-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">9. Tunsin itseni hyvin varmaksi, kun käytin sovellusta</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q9-1" name="fi-q9" value="1" required>
-                            <label for="fi-q9-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q9-2" name="fi-q9" value="2">
-                            <label for="fi-q9-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q9-3" name="fi-q9" value="3">
-                            <label for="fi-q9-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q9-4" name="fi-q9" value="4">
-                            <label for="fi-q9-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q9-5" name="fi-q9" value="5">
-                            <label for="fi-q9-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">10. Minun piti opetella paljon asioita, ennen kuin sovelluksen käyttö alkoi sujua</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q10-1" name="fi-q10" value="1" required>
-                            <label for="fi-q10-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q10-2" name="fi-q10" value="2">
-                            <label for="fi-q10-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q10-3" name="fi-q10" value="3">
-                            <label for="fi-q10-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q10-4" name="fi-q10" value="4">
-                            <label for="fi-q10-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="fi-q10-5" name="fi-q10" value="5">
-                            <label for="fi-q10-5">5</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Questions Container -->
+            <div id="questions-container"></div>
             
-            <!-- Swedish Questions -->
-            <div id="sv-questions" class="question-section">
-                <div class="scale-header">
-                    <span>Instämmer inte alls</span>
-                    <span>Instämmer helt</span>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">1. Jag tror att jag skulle vilja använda denna applikation ofta</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q1-1" name="sv-q1" value="1" required>
-                            <label for="sv-q1-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q1-2" name="sv-q1" value="2">
-                            <label for="sv-q1-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q1-3" name="sv-q1" value="3">
-                            <label for="sv-q1-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q1-4" name="sv-q1" value="4">
-                            <label for="sv-q1-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q1-5" name="sv-q1" value="5">
-                            <label for="sv-q1-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">2. Jag uppfattar denna applikation som onödigt komplex</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q2-1" name="sv-q2" value="1" required>
-                            <label for="sv-q2-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q2-2" name="sv-q2" value="2">
-                            <label for="sv-q2-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q2-3" name="sv-q2" value="3">
-                            <label for="sv-q2-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q2-4" name="sv-q2" value="4">
-                            <label for="sv-q2-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q2-5" name="sv-q2" value="5">
-                            <label for="sv-q2-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">3. Jag tycker att denna applikation är enkel att använda</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q3-1" name="sv-q3" value="1" required>
-                            <label for="sv-q3-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q3-2" name="sv-q3" value="2">
-                            <label for="sv-q3-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q3-3" name="sv-q3" value="3">
-                            <label for="sv-q3-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q3-4" name="sv-q3" value="4">
-                            <label for="sv-q3-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q3-5" name="sv-q3" value="5">
-                            <label for="sv-q3-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">4. Jag tror att jag skulle behöva stöd för att kunna använda denna applikation</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q4-1" name="sv-q4" value="1" required>
-                            <label for="sv-q4-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q4-2" name="sv-q4" value="2">
-                            <label for="sv-q4-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q4-3" name="sv-q4" value="3">
-                            <label for="sv-q4-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q4-4" name="sv-q4" value="4">
-                            <label for="sv-q4-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q4-5" name="sv-q4" value="5">
-                            <label for="sv-q4-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">5. Jag upplever att de olika funktionerna i denna applikation var väl integrerade</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q5-1" name="sv-q5" value="1" required>
-                            <label for="sv-q5-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q5-2" name="sv-q5" value="2">
-                            <label for="sv-q5-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q5-3" name="sv-q5" value="3">
-                            <label for="sv-q5-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q5-4" name="sv-q5" value="4">
-                            <label for="sv-q5-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q5-5" name="sv-q5" value="5">
-                            <label for="sv-q5-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">6. Jag tycker att applikationen är inkonsekvent</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q6-1" name="sv-q6" value="1" required>
-                            <label for="sv-q6-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q6-2" name="sv-q6" value="2">
-                            <label for="sv-q6-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q6-3" name="sv-q6" value="3">
-                            <label for="sv-q6-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q6-4" name="sv-q6" value="4">
-                            <label for="sv-q6-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q6-5" name="sv-q6" value="5">
-                            <label for="sv-q6-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">7. Jag föreställer mig att de flesta personer skulle lära sig att använda denna applikation väldigt snabbt</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q7-1" name="sv-q7" value="1" required>
-                            <label for="sv-q7-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q7-2" name="sv-q7" value="2">
-                            <label for="sv-q7-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q7-3" name="sv-q7" value="3">
-                            <label for="sv-q7-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q7-4" name="sv-q7" value="4">
-                            <label for="sv-q7-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q7-5" name="sv-q7" value="5">
-                            <label for="sv-q7-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">8. Jag tycker att applikationen var krånglig</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q8-1" name="sv-q8" value="1" required>
-                            <label for="sv-q8-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q8-2" name="sv-q8" value="2">
-                            <label for="sv-q8-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q8-3" name="sv-q8" value="3">
-                            <label for="sv-q8-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q8-4" name="sv-q8" value="4">
-                            <label for="sv-q8-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q8-5" name="sv-q8" value="5">
-                            <label for="sv-q8-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">9. Jag känner mig trygg med att använda denna applikation</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q9-1" name="sv-q9" value="1" required>
-                            <label for="sv-q9-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q9-2" name="sv-q9" value="2">
-                            <label for="sv-q9-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q9-3" name="sv-q9" value="3">
-                            <label for="sv-q9-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q9-4" name="sv-q9" value="4">
-                            <label for="sv-q9-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q9-5" name="sv-q9" value="5">
-                            <label for="sv-q9-5">5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">10. Jag behövde lära mig många saker innan jag kunde komma igång med denna applikation</div>
-                    <div class="radio-group">
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q10-1" name="sv-q10" value="1" required>
-                            <label for="sv-q10-1">1</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q10-2" name="sv-q10" value="2">
-                            <label for="sv-q10-2">2</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q10-3" name="sv-q10" value="3">
-                            <label for="sv-q10-3">3</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q10-4" name="sv-q10" value="4">
-                            <label for="sv-q10-4">4</label>
-                        </div>
-                        <div class="radio-wrapper">
-                            <input type="radio" id="sv-q10-5" name="sv-q10" value="5">
-                            <label for="sv-q10-5">5</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <button type="submit" class="submit-btn" disabled>Valitse kieli / Välj språk</button>
+            <button type="submit" class="submit-btn" disabled>Select language / Valitse kieli / Välj språk</button>
         </form>
         
         <div class="success-message" id="successMessage">
-            Kiitos vastauksestasi! / Tack för ditt svar!
+            Thank you! / Kiitos! / Tack!
         </div>
         
         <div class="error-message" id="errorMessage">
-            Virhe lähetettäessä lomaketta. Yritä uudelleen. / Fel vid sändning av formulär. Försök igen.
+            Error submitting form. Please try again.
         </div>
     </div>
     
     <script>
+        // TRANSLATIONS - EASY TO EDIT HERE!
+        const translations = {
+            fi: {
+                nameLabel: 'Nimi',
+                emailLabel: 'Sähköposti',
+                firstNamePlaceholder: 'Etunimi',
+                lastNamePlaceholder: 'Sukunimi',
+                emailPlaceholder: 'esimerkki@email.com',
+                submitButton: 'Lähetä',
+                scaleMin: 'Eri mieltä',
+                scaleMax: 'Samaa mieltä',
+                questions: [
+                    'Luulen, että käyttäisin tätä sovellusta usein',
+                    'Mielestäni sovellus oli turhan monimutkainen',
+                    'Mielestäni sovelluksen käyttäminen oli helppoa',
+                    'Luulen, että tarvitsen teknisen henkilön tukea, jotta osaisin käyttää tätä sovellusta',
+                    'Mielestäni sovelluksen eri osat toimivat hyvin yhteen',
+                    'Mielestäni sovelluksessa on liian epäjohdonmukainen',
+                    'Luulen, että useimmat oppivat sovelluksen käytön erittäin nopeasti',
+                    'Mielestäni sovelluksen käyttö oli hyvin hankalaa',
+                    'Tunsin itseni hyvin varmaksi, kun käytin sovellusta',
+                    'Minun piti opetella paljon asioita, ennen kuin sovelluksen käyttö alkoi sujua'
+                ]
+            },
+            sv: {
+                nameLabel: 'Namn',
+                emailLabel: 'E-post',
+                firstNamePlaceholder: 'Förnamn',
+                lastNamePlaceholder: 'Efternamn',
+                emailPlaceholder: 'exempel@email.com',
+                submitButton: 'Skicka',
+                scaleMin: 'Instämmer inte alls',
+                scaleMax: 'Instämmer helt',
+                questions: [
+                    'Jag tror att jag skulle vilja använda denna applikation ofta',
+                    'Jag uppfattar denna applikation som onödigt komplex',
+                    'Jag tycker att denna applikation är enkel att använda',
+                    'Jag tror att jag skulle behöva stöd för att kunna använda denna applikation',
+                    'Jag upplever att de olika funktionerna i denna applikation var väl integrerade',
+                    'Jag tycker att applikationen är inkonsekvent',
+                    'Jag föreställer mig att de flesta personer skulle lära sig att använda denna applikation väldigt snabbt',
+                    'Jag tycker att applikationen var krånglig',
+                    'Jag känner mig trygg med att använda denna applikation',
+                    'Jag behövde lära mig många saker innan jag kunde komma igång med denna applikation'
+                ]
+            },
+            en: {
+                nameLabel: 'Name',
+                emailLabel: 'Email',
+                firstNamePlaceholder: 'First name',
+                lastNamePlaceholder: 'Last name',
+                emailPlaceholder: 'example@email.com',
+                submitButton: 'Submit',
+                scaleMin: 'Strongly disagree',
+                scaleMax: 'Strongly agree',
+                questions: [
+                    'I think that I would like to use this system frequently',
+                    'I found the system unnecessarily complex',
+                    'I thought the system was easy to use',
+                    'I think that I would need the support of a technical person to be able to use this system',
+                    'I found the various functions in this system were well integrated',
+                    'I thought there was too much inconsistency in this system',
+                    'I would imagine that most people would learn to use this system very quickly',
+                    'I found the system very cumbersome to use',
+                    'I felt very confident using the system',
+                    'I needed to learn a lot of things before I could get going with this system'
+                ]
+            }
+        };
+        
         let selectedLanguage = null;
         
         function selectLanguage(lang) {
             selectedLanguage = lang;
+            const trans = translations[lang];
             
             // Update button states
             document.querySelectorAll('.language-btn').forEach(btn => {
@@ -780,43 +394,45 @@
             // Show user info section
             document.getElementById('user-info').style.display = 'block';
             
-            // Update labels based on language
-            if (lang === 'fi') {
-                document.getElementById('name-label').textContent = 'Nimi';
-                document.getElementById('email-label').textContent = 'Sähköposti';
-                document.getElementById('firstName').placeholder = 'Etunimi';
-                document.getElementById('lastName').placeholder = 'Sukunimi';
-                document.getElementById('email').placeholder = 'esimerkki@email.com';
-            } else {
-                document.getElementById('name-label').textContent = 'Namn';
-                document.getElementById('email-label').textContent = 'E-post';
-                document.getElementById('firstName').placeholder = 'Förnamn';
-                document.getElementById('lastName').placeholder = 'Efternamn';
-                document.getElementById('email').placeholder = 'exempel@email.com';
-            }
+            // Update labels and placeholders
+            document.getElementById('name-label').textContent = trans.nameLabel;
+            document.getElementById('email-label').textContent = trans.emailLabel;
+            document.getElementById('firstName').placeholder = trans.firstNamePlaceholder;
+            document.getElementById('lastName').placeholder = trans.lastNamePlaceholder;
+            document.getElementById('email').placeholder = trans.emailPlaceholder;
             
-            // Show/hide question sections
-            document.querySelectorAll('.question-section').forEach(section => {
-                section.classList.remove('active');
+            // Generate questions
+            const container = document.getElementById('questions-container');
+            container.innerHTML = `
+                <div class="scale-header">
+                    <span>${trans.scaleMin}</span>
+                    <span>${trans.scaleMax}</span>
+                </div>
+            `;
+            
+            trans.questions.forEach((question, index) => {
+                const qNum = index + 1;
+                const questionHtml = `
+                    <div class="question">
+                        <div class="question-text">${qNum}. ${question}</div>
+                        <div class="radio-group">
+                            ${[1,2,3,4,5].map(value => `
+                                <div class="radio-wrapper">
+                                    <input type="radio" id="${lang}-q${qNum}-${value}" name="${lang}-q${qNum}" value="${value}" required>
+                                    <label for="${lang}-q${qNum}-${value}" 
+                                           data-hint="${value === 1 ? trans.scaleMin : value === 5 ? trans.scaleMax : ''}">${value}</label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHtml;
             });
-            document.getElementById(lang + '-questions').classList.add('active');
             
             // Update submit button
             const submitBtn = document.querySelector('.submit-btn');
             submitBtn.disabled = false;
-            submitBtn.textContent = lang === 'fi' ? 'Lähetä' : 'Skicka';
-            
-            // Clear required attributes from hidden sections
-            document.querySelectorAll('.question-section:not(.active) input').forEach(input => {
-                input.removeAttribute('required');
-            });
-            
-            // Add required attributes to visible section
-            document.querySelectorAll('.question-section.active input[type="radio"]').forEach(input => {
-                if (input.value === "1") {
-                    input.setAttribute('required', 'required');
-                }
-            });
+            submitBtn.textContent = trans.submitButton;
         }
         
         // Handle form submission
@@ -830,7 +446,8 @@
             
             const submitBtn = document.querySelector('.submit-btn');
             submitBtn.disabled = true;
-            submitBtn.textContent = selectedLanguage === 'fi' ? 'Lähetetään...' : 'Skickar...';
+            submitBtn.textContent = selectedLanguage === 'fi' ? 'Lähetetään...' : 
+                                   selectedLanguage === 'sv' ? 'Skickar...' : 'Submitting...';
             
             // Collect form data
             const formData = {
@@ -888,7 +505,7 @@
                 console.error('Error:', error);
                 document.getElementById('errorMessage').style.display = 'block';
                 submitBtn.disabled = false;
-                submitBtn.textContent = selectedLanguage === 'fi' ? 'Lähetä' : 'Skicka';
+                submitBtn.textContent = translations[selectedLanguage].submitButton;
             }
         });
     </script>
