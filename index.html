@@ -201,6 +201,22 @@
         </div>
         
         <form id="susForm">
+            <!-- User Information -->
+            <div id="user-info" style="display: none; margin-bottom: 30px;">
+                <div class="question">
+                    <div class="question-text" id="name-label">Nimi / Namn</div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <input type="text" id="firstName" name="firstName" placeholder="Etunimi / Förnamn" required 
+                               style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+                        <input type="text" id="lastName" name="lastName" placeholder="Sukunimi / Efternamn" required 
+                               style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+                    </div>
+                    <div class="question-text" id="email-label">Sähköposti / E-post</div>
+                    <input type="email" id="email" name="email" placeholder="esimerkki@email.com / exempel@email.com" required 
+                           style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px;">
+                </div>
+            </div>
+            
             <!-- Finnish Questions -->
             <div id="fi-questions" class="question-section">
                 <div class="scale-header">
@@ -761,6 +777,24 @@
             });
             event.target.classList.add('active');
             
+            // Show user info section
+            document.getElementById('user-info').style.display = 'block';
+            
+            // Update labels based on language
+            if (lang === 'fi') {
+                document.getElementById('name-label').textContent = 'Nimi';
+                document.getElementById('email-label').textContent = 'Sähköposti';
+                document.getElementById('firstName').placeholder = 'Etunimi';
+                document.getElementById('lastName').placeholder = 'Sukunimi';
+                document.getElementById('email').placeholder = 'esimerkki@email.com';
+            } else {
+                document.getElementById('name-label').textContent = 'Namn';
+                document.getElementById('email-label').textContent = 'E-post';
+                document.getElementById('firstName').placeholder = 'Förnamn';
+                document.getElementById('lastName').placeholder = 'Efternamn';
+                document.getElementById('email').placeholder = 'exempel@email.com';
+            }
+            
             // Show/hide question sections
             document.querySelectorAll('.question-section').forEach(section => {
                 section.classList.remove('active');
@@ -801,6 +835,9 @@
             // Collect form data
             const formData = {
                 timestamp: new Date().toISOString(),
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
                 language: selectedLanguage,
                 responses: []
             };
@@ -841,6 +878,7 @@
                 // Show success message
                 document.getElementById('successMessage').style.display = 'block';
                 document.getElementById('susForm').style.display = 'none';
+                document.querySelector('.language-selector').style.display = 'none';
                 
                 // For demo: log the data
                 console.log('Form data:', formData);
